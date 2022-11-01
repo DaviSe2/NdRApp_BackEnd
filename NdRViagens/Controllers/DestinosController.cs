@@ -18,13 +18,13 @@ namespace NdRViagens.Controllers
         [HttpGet]
         public IEnumerable<Destino> GetDestinos()
         {
-            return _context.Destino;
+            return _context.Destinos;
         }
 
         [HttpGet("{id}")]
         public IActionResult GetDestinoById(int id)
         {
-            var destino = _context.Destino.SingleOrDefault(destino => destino.Id == id);
+            var destino = _context.Destinos.SingleOrDefault(destino => destino.Id == id);
             
             if(destino == null)
             {
@@ -40,7 +40,7 @@ namespace NdRViagens.Controllers
             {
                 return BadRequest();
             }
-            _context.Destino.Add(destino);
+            _context.Destinos.Add(destino);
             _context.SaveChanges();
             return new ObjectResult(destino);
         }
@@ -48,13 +48,13 @@ namespace NdRViagens.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteDestino(int id)
         {
-            var destino = _context.Destino.SingleOrDefault(destino => destino.Id == id);
+            var destino = _context.Destinos.SingleOrDefault(destino => destino.Id == id);
 
             if(destino == null)
             {
                 return BadRequest();
             }
-            _context.Destino.Remove(destino);
+            _context.Destinos.Remove(destino);
             _context.SaveChanges();
             return Ok(destino);
         }

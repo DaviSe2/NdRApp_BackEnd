@@ -9,8 +9,8 @@ namespace NdRViagens.Data
             : base(options)
         { }
 
-        public DbSet<Destino> Destino { get; set; }
+        public DbSet<Destino> Destinos { get; set; }
 
-        public DbSet<PacoteViagem> PacoteViagem { get; set; }
+        public DbSet<PacoteViagem> Pacotes { get; set; }
     }
 }

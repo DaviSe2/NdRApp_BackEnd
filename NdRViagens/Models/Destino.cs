@@ -1,15 +1,19 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
+using NPersistence;
 
 namespace NdRViagens.Models
 {
-    [Table("destino")]
+    [Entity]
     public class Destino
     {
-        [Key]
+        [Id]
+        [GeneratedValue(Strategy = GenerationType.IDENTITY)]
+        [ColumnAttribute("ID")]
         public long Id { get; set; } = 0;
 
-        [Required(ErrorMessage = "Informe a cidade")]
+        [NotNull]
+        [ColumnAttribute("Cidade")]
         public string Cidade { get; set; }
     }
 }
