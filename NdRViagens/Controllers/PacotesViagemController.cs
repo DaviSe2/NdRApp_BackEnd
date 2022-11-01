@@ -28,7 +28,7 @@ namespace NdRViagens.Services
         [HttpGet("{id}")]
         public IActionResult GetPacoteViagemById(long id)
         {
-            var PacoteViagem = _context.Pacotes.SingleOrDefault(PacoteViagem => PacoteViagem.Id == id);
+            var PacoteViagem = _context.Pacotes.Include(x => x.Destino).SingleOrDefault(PacoteViagem => PacoteViagem.Id == id);
 
             if (PacoteViagem == null)
             {
@@ -40,7 +40,7 @@ namespace NdRViagens.Services
         [HttpGet("promocoes/{id}")]
         public IActionResult GetPromoPacoteViagens(long id)
         {
-            var PacoteViagem = _context.Pacotes.SingleOrDefault(PacoteViagem => PacoteViagem.Id == id);
+            var PacoteViagem = _context.Pacotes.Include(x => x.Destino).SingleOrDefault(PacoteViagem => PacoteViagem.Id == id);
 
             if (PacoteViagem == null)
             {
@@ -82,6 +82,13 @@ namespace NdRViagens.Services
                 return BadRequest();
             }
 
+            var destino = _context.Destinos.Where(x => x.Id == PacoteViagem.Destino.Id).FirstOrDefault();
+
+            if (destino != null)
+            {
+                PacoteViagem.Destino = destino;
+            }
+
             _context.Entry(PacoteViagem).State = EntityState.Modified;
             _context.SaveChanges();
 
@@ -89,9 +96,9 @@ namespace NdRViagens.Services
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeletePacoteViagem(long Id)
+        public IActionResult DeletePacoteViagem(long id)
         {
-            var PacoteViagem = _context.Pacotes.SingleOrDefault(PacoteViagem => PacoteViagem.Id == Id);
+            var PacoteViagem = _context.Pacotes.Include(x => x.Destino).SingleOrDefault(PacoteViagem => PacoteViagem.Id == id);
 
             if (PacoteViagem == null)
             {
